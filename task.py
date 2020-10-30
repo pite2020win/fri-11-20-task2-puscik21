@@ -2,11 +2,12 @@
 class Diary:
     def __init__(self):
         self.students = []
-        self.subjects_names = []
+        self.subjects_names = set()
 
     def add_new_subjects_from_file(self, file_path):
         file = open(file_path, "r")
-        self.subjects_names = file.read().splitlines()
+        for subject in file.read().splitlines():
+            self.add_subject(subject)
 
     def add_new_students_from_file(self, file_path):
         file = open(file_path, "r")
@@ -22,7 +23,7 @@ class Diary:
         pass
 
     def add_subject(self, subject):
-        self.subjects_names.append(subject)
+        self.subjects_names.add(subject)
 
     def print_all_students(self):
         print(self.students)
@@ -71,7 +72,6 @@ class Subject:
 
 if __name__ == '__main__':
     diary = Diary()
-    diary.add_subject("math")
     diary.add_new_subjects_from_file("subjects.txt")
     diary.add_new_students_from_file("students.txt")
     diary.print_all_students()
