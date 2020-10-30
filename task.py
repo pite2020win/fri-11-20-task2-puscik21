@@ -1,11 +1,21 @@
 
 class Diary:
-    # todo read students and classes from file
     def __init__(self):
         self.students = []
         self.subjects_names = []
 
-    def add_new_student(self, student):
+    def add_new_subjects_from_file(self, file_path):
+        file = open(file_path, "r")
+        self.subjects_names = file.read().splitlines()
+
+    def add_new_students_from_file(self, file_path):
+        file = open(file_path, "r")
+        full_names = [full_name.split(", ") for full_name in file.read().splitlines()]
+        for full_name in full_names:
+            self.add_new_student(full_name[0], full_name[1])
+
+    def add_new_student(self, name, surname):
+        student = Student(name, surname)
         self.students.append(student)
 
     def add_student_to_subject(self, name, surname, subject):
@@ -16,6 +26,9 @@ class Diary:
 
     def print_all_students(self):
         print(self.students)
+
+    def print_all_subjects(self):
+        print(self.subjects_names)
 
     def print_students_average_in_subject(self, subject):
         pass
@@ -58,7 +71,9 @@ class Subject:
 
 if __name__ == '__main__':
     diary = Diary()
-    diary.add_new_student(Student("Jan", "Kowalski"))
     diary.add_subject("math")
-    diary.add_student_to_subject("Jan", "Kowalski", "math")
+    diary.add_new_subjects_from_file("subjects.txt")
+    diary.add_new_students_from_file("students.txt")
     diary.print_all_students()
+    diary.print_all_subjects()
+    diary.add_student_to_subject("Jan", "Kowalski", "math")
