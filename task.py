@@ -8,8 +8,11 @@ class Diary:
     def add_new_student(self, student):
         self.students.append(student)
 
-    def add_student_to_subject(self, student, subject):
+    def add_student_to_subject(self, name, surname, subject):
         pass
+
+    def add_subject(self, subject):
+        self.subjects_names.append(subject)
 
     def print_all_students(self):
         print(self.students)
@@ -56,4 +59,6 @@ class Subject:
 if __name__ == '__main__':
     diary = Diary()
     diary.add_new_student(Student("Jan", "Kowalski"))
+    diary.add_subject("math")
+    diary.add_student_to_subject("Jan", "Kowalski", "math")
     diary.print_all_students()
