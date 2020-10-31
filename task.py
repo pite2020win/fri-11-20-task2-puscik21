@@ -47,13 +47,14 @@ class Diary:
     def print_all_subjects(self):
         print(self.subjects_names)
 
-    def print_all_subjects_average_scores(self, subject):
-        # todo
-        pass
+    def print_all_subjects_average_scores(self):
+        for subject_name in self.subjects_names:
+            self.print_subject_average_scores(subject_name)
 
-    def print_subject_average_scores(self, subject):
-        # todo
-        pass
+    def print_subject_average_scores(self, subject_name):
+        print("\nAverages scores in {} are:".format(subject_name))
+        for student in self.students:
+            self.print_student_average_in_subject(student.name, student.surname, subject_name)
 
     def print_all_students_average_scores(self):
         for student in self.students:
@@ -110,9 +111,12 @@ class Student:
         subjects_with_scores = 0
         for subject in self.subjects:
             if subject.get_scores_average() != "NaN":
-                scores_sum += + subject.get_scores_average()
+                scores_sum += subject.get_scores_average()
                 subjects_with_scores += 1
         return scores_sum / subjects_with_scores if subjects_with_scores > 0 else "NaN"
+
+    def get_subject_scores(self, subject_name):
+        return self.get_subject_by_name(subject_name).student_scores
 
     def get_subject_average(self, subject_name):
         subject = self.get_subject_by_name(subject_name)
@@ -158,7 +162,9 @@ if __name__ == '__main__':
     # diary.print_student_averages_in_all_subjects("Jan", "Kowalski")
     # diary.print_student_average_score("Jan", "Kowalski")
 
-    diary.print_all_students_average_scores()
+    # diary.print_all_students_average_scores()
+    # diary.print_subject_average_scores("IT")
+    # diary.print_all_subjects_average_scores()
 
 # todo uzywac setow jesli chodzi o subjecty studenta i studentow w dzienniku
 # todo zrobic obiekt subject jako cos duzego, z wlasna lista studentow
