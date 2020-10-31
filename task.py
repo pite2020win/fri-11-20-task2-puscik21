@@ -19,11 +19,17 @@ class Diary:
         student = Student(name, surname)
         self.students.append(student)
 
-    def add_student_to_subject(self, name, surname, subject):
-        pass
-
     def add_subject(self, subject):
         self.subjects_names.add(subject)
+
+    def add_all_students_to_subjects(self):
+        pass
+
+    def add_student_to_subject_by_name(self, name, surname, subject):
+        pass
+
+    def add_student_to_subject(self, student, subject):
+        pass
 
     def print_all_students(self):
         print(self.students)
@@ -46,9 +52,11 @@ class Student:
         self.name = name
         self.surname = surname
         self.attendance = 0
-        self.subjects = []
+        self.average = 0
+        self.subjects = set()
 
     def get_average(self):
+        # todo count average from all subjects averages
         pass
 
     def get_attendance(self):
@@ -76,4 +84,8 @@ if __name__ == '__main__':
     diary.add_new_students_from_file("students.txt")
     diary.print_all_students()
     diary.print_all_subjects()
-    diary.add_student_to_subject("Jan", "Kowalski", "math")
+    diary.add_student_to_subject_by_name("Jan", "Kowalski", "math")
+
+
+# todo uzywac setow jesli chodzi o subjecty studenta i studentow w dzienniku
+# todo zrobic obiekt subject jako cos duzego, z wlasna lista studentow
