@@ -1,6 +1,6 @@
 class Diary:
     def __init__(self):
-        self.students = []
+        self.students = set()
         self.subjects_names = set()
 
     def add_new_subjects_from_file(self, file_path):
@@ -19,7 +19,7 @@ class Diary:
 
     def add_new_student(self, name, surname):
         student = Student(name, surname)
-        self.students.append(student)
+        self.students.add(student)
 
     def add_all_students_to_subjects(self):
         for student in self.students:
