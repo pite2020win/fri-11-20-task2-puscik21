@@ -2,6 +2,7 @@ class Diary:
     def __init__(self):
         self.students = set()
         self.subjects_names = set()
+        self.days_in_semester = 0
 
     def add_new_subjects_from_file(self, file_path):
         file = open(file_path, "r")
@@ -33,6 +34,17 @@ class Diary:
     def add_student_score_in_subject(self, name, surname, score, subject_name):
         student = self.get_student_by_personal_data(name, surname)
         student.add_score_in_subject(score, subject_name)
+
+    def add_next_day_in_semester(self):
+        self.days_in_semester += 1
+
+    def add_attendance_to_all_students(self):
+        for student in self.students:
+            self.add_attendance_to_student(student.name, student.surname)
+
+    def add_attendance_to_student(self, name, surname):
+        student = self.get_student_by_personal_data(name, surname)
+        student.add_attendance()
 
     def get_student_by_personal_data(self, name, surname):
         student = next(filter(lambda s: s.name == name and s.surname == surname, self.students), None)
@@ -74,12 +86,13 @@ class Diary:
         print("{} average score in {} is {}".format(student, subject_name, student.get_subject_average(subject_name)))
 
     def print_all_students_attendance(self):
-        # todo
-        pass
+        print("\nStudents attendance:")
+        for student in self.students:
+            self.print_student_attendance(student.name, student.surname)
 
-    def print_student_attendance(self):
-        # todo
-        pass
+    def print_student_attendance(self, name, surname):
+        student = self.get_student_by_personal_data(name, surname)
+        print("{} {} attendance is: {}/{}".format(name, surname, student.attendance, self.days_in_semester))
 
 
 class Student:
@@ -96,6 +109,9 @@ class Student:
     def add_score_in_subject(self, score, subject_name):
         subject = self.get_subject_by_name(subject_name)
         subject.add_score(score)
+
+    def add_attendance(self):
+        self.attendance += 1
 
     def get_subject_by_name(self, subject_name):
         subject = next(filter(lambda s: s.name == subject_name, self.subjects), None)
@@ -121,10 +137,6 @@ class Student:
     def get_subject_average(self, subject_name):
         subject = self.get_subject_by_name(subject_name)
         return subject.get_scores_average()
-
-    def get_attendance(self):
-        # todo
-        pass
 
     def __repr__(self):
         return self.name + " " + self.surname
@@ -157,15 +169,27 @@ if __name__ == '__main__':
     diary.print_all_students()
     diary.print_all_subjects()
 
-    diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
-    diary.add_student_score_in_subject("Jan", "Kowalski", 1, "math")
+# adding scores testing
+#     diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
+#     diary.add_student_score_in_subject("Jan", "Kowalski", 1, "math")
     # diary.print_student_averages_in_all_subjects("Jan", "Kowalski")
     # diary.print_student_average_score("Jan", "Kowalski")
 
+# subjects averages testing
     # diary.print_all_students_average_scores()
     # diary.print_subject_average_scores("IT")
     # diary.print_all_subjects_average_scores()
 
-# todo uzywac setow jesli chodzi o subjecty studenta i studentow w dzienniku
-# todo zrobic obiekt subject jako cos duzego, z wlasna lista studentow
+# attendance testing
+    # diary.print_student_attendance("Jan", "Kowalski")
+    # diary.print_all_students_attendance()
+    # diary.add_next_day_in_semester()
+    # diary.print_all_students_attendance()
+    # diary.add_attendance_to_student("Jan", "Kowalski")
+    # diary.print_all_students_attendance()
+    # diary.add_next_day_in_semester()
+    # diary.add_attendance_to_all_students()
+    # diary.print_all_students_attendance()
+
 # todo ladowanie ocen z pliku
+# todo jakis interfejs ktorym by sie dodawalo oceny, obecnosci itp
