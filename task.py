@@ -1,6 +1,11 @@
 import json
 
 
+def load_diary_data(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+
 def add_class_to_diary_data(file_path):
     with open(file_path, 'r') as file:
         lines = file.read().splitlines()
@@ -12,12 +17,7 @@ def add_class_to_diary_data(file_path):
         data[school_name] = {}
     data[school_name][class_name] = class_body
     with open('diaryData.json', 'w') as json_file:
-        json.dump(data, json_file)
-
-
-def load_diary_data(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file)
+        json.dump(data, json_file, indent=2)
 
 
 def prepare_class_body(lines):
@@ -60,13 +60,20 @@ def prepare_student_subjects_body(student_grades, subjects):
 
 
 def get_all_students():
-    students = data['AGH']['classes'][0]['students']
-    return ["{} {}".format(student['name'], student['surname']) for student in students]
+    result = {}
+    for school_name in data.keys():
+        result[school_name] = {}
+        for class_name in data[school_name].keys():
+            result[school_name][class_name] = ["{} {}".format(student['name'], student['surname']) for student in
+                                               data[school_name][class_name]['students']]
+    return result
 
 
 def get_all_subjects():
-    subjects = data['AGH']['classes'][0]['subjects']
-    return subjects
+    result = {}
+    for school_name in data.keys():
+        result[school_name] = list(data[school_name].keys())
+    return result
 
 
 if __name__ == '__main__':
@@ -76,12 +83,6 @@ if __name__ == '__main__':
     print(get_all_subjects())
 
 #########################
-
-# TODO build json from files
-# TODO add json to data
-
-
-# TODO generate json from studens, subjects files
 
 # TODO adding scores testing
 # diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
@@ -110,7 +111,6 @@ if __name__ == '__main__':
 # change scores to grades
 # todo ladowanie ocen z pliku
 # todo jakis interfejs ktorym by sie dodawalo oceny, obecnosci itp
-
 
 
 # todo think about adding to json from text files
