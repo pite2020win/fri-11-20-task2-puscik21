@@ -113,13 +113,16 @@ def get_student_average_in_subject(name, surname, subject_name):
 
 def get_student_grades_in_subject(name, surname, subject_name):
     student = get_student_by_personal_data(name, surname)
-    subject = next(filter(lambda x: x['name'] == subject_name, student['subjects']), {})
+    subject = next(filter(lambda x: x['name'] == subject_name, student['subjects']), None)
+    assert subject is not None, "There is no subject with given name"
     return subject['student_grades']
 
 
 def get_student_by_personal_data(name, surname):
     students = get_students_in_current_class()
-    return next(filter(lambda x: x['name'] == name and x['surname'] == surname, students), {})
+    student = next(filter(lambda x: x['name'] == name and x['surname'] == surname, students), None)
+    assert student is not None, 'There is no student with given names'
+    return student
 
 
 def get_all_students_average_grades():
