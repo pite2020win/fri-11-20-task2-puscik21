@@ -1,0 +1,38 @@
+{
+    "AGH": {
+        "classes": [
+            {
+                "name": "informatyka stosowana",
+                "subjects": "math, physics, IT, english",
+                "students": [
+                    {
+                        "name": "Jan",
+                        "surname": "Kowalski",
+                        "attendance": 0,
+                        "subjects": [
+                            {
+                                "name": "math",
+                                "student_scores": "[]"
+                            },
+                            {
+                                "name": "physics",
+                                "student_scores": "[]"
+                            },
+                            {
+                                "name": "IT",
+                                "student_scores": "[]"
+                            },
+                            {
+                                "name": "english",
+                                "student_scores": "[]"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "zarzadzanie": {}
+            }
+        ]
+    }
+}

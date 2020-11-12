@@ -1,195 +1,127 @@
-class Diary:
-    def __init__(self):
-        self.students = set()
-        self.subjects_names = set()
-        self.days_in_semester = 0
-
-    def add_new_subjects_from_file(self, file_path):
-        file = open(file_path, "r")
-        for subject in file.read().splitlines():
-            self.add_subject(subject)
-
-    def add_subject(self, subject_name):
-        self.subjects_names.add(subject_name)
-
-    def add_new_students_from_file(self, file_path):
-        file = open(file_path, "r")
-        full_names = [full_name.split(", ") for full_name in file.read().splitlines()]
-        for full_name in full_names:
-            self.add_new_student(full_name[0], full_name[1])
-
-    def add_new_student(self, name, surname):
-        student = Student(name, surname)
-        self.students.add(student)
-
-    def add_all_students_to_subjects(self):
-        for student in self.students:
-            for subject_name in self.subjects_names:
-                student.add_to_subject(subject_name)
-
-    def add_student_to_subject(self, name, surname, subject_name):
-        student = self.get_student_by_personal_data(name, surname)
-        student.add_to_subject(subject_name)
-
-    def add_student_score_in_subject(self, name, surname, score, subject_name):
-        student = self.get_student_by_personal_data(name, surname)
-        student.add_score_in_subject(score, subject_name)
-
-    def add_next_day_in_semester(self):
-        self.days_in_semester += 1
-
-    def add_attendance_to_all_students(self):
-        for student in self.students:
-            self.add_attendance_to_student(student.name, student.surname)
-
-    def add_attendance_to_student(self, name, surname):
-        student = self.get_student_by_personal_data(name, surname)
-        student.add_attendance()
-
-    def get_student_by_personal_data(self, name, surname):
-        student = next(filter(lambda s: s.name == name and s.surname == surname, self.students), None)
-        if student is not None:
-            return student
-        else:
-            raise Exception("No student {} {} in diary".format(name, surname))
-
-    def print_all_students(self):
-        print(self.students)
-
-    def print_all_subjects(self):
-        print(self.subjects_names)
-
-    def print_all_subjects_average_scores(self):
-        for subject_name in self.subjects_names:
-            self.print_subject_average_scores(subject_name)
-
-    def print_subject_average_scores(self, subject_name):
-        print("\nAverages scores in {} are:".format(subject_name))
-        for student in self.students:
-            self.print_student_average_in_subject(student.name, student.surname, subject_name)
-
-    def print_all_students_average_scores(self):
-        for student in self.students:
-            print("{} {} scores average is {}".format(student.name, student.surname, student.get_average()))
-
-    def print_student_average_score(self, name, surname):
-        student = self.get_student_by_personal_data(name, surname)
-        print("\n{} {} scores average is {}".format(name, surname, student.get_average()))
-
-    def print_student_averages_in_all_subjects(self, name, surname):
-        print("\n{} {} subjects average scores are:".format(name, surname))
-        for subject_name in self.subjects_names:
-            self.print_student_average_in_subject(name, surname, subject_name)
-
-    def print_student_average_in_subject(self, name, surname, subject_name):
-        student = self.get_student_by_personal_data(name, surname)
-        print("{} average score in {} is {}".format(student, subject_name, student.get_subject_average(subject_name)))
-
-    def print_all_students_attendance(self):
-        print("\nStudents attendance:")
-        for student in self.students:
-            self.print_student_attendance(student.name, student.surname)
-
-    def print_student_attendance(self, name, surname):
-        student = self.get_student_by_personal_data(name, surname)
-        print("{} {} attendance is: {}/{}".format(name, surname, student.attendance, self.days_in_semester))
+import json
 
 
-class Student:
-    def __init__(self, name, surname):
-        self.name = name
-        self.surname = surname
-        self.attendance = 0
-        self.average = 0
-        self.subjects = set()
+def add_class_to_diary_data(file_path, school_name, class_name):
+    class_body = prepare_class_body(file_path, class_name)
 
-    def add_to_subject(self, subject_name):
-        self.subjects.add(Subject(subject_name))
+    if school_name not in data:
+        data[school_name] = {}
 
-    def add_score_in_subject(self, score, subject_name):
-        subject = self.get_subject_by_name(subject_name)
-        subject.add_score(score)
+    if 'classes' not in data[school_name]:
+        data[school_name]['classes'] = {}
+    data[school_name]['classes'][class_name] = class_body
 
-    def add_attendance(self):
-        self.attendance += 1
-
-    def get_subject_by_name(self, subject_name):
-        subject = next(filter(lambda s: s.name == subject_name, self.subjects), None)
-        if subject is not None:
-            return subject
-        else:
-            raise Exception("Student is not in subject {}".format(subject_name))
-
-    def get_average(self):
-        if len(self.subjects) == 0:
-            return "NaN"
-        scores_sum = 0
-        subjects_with_scores = 0
-        for subject in self.subjects:
-            if subject.get_scores_average() != "NaN":
-                scores_sum += subject.get_scores_average()
-                subjects_with_scores += 1
-        return scores_sum / subjects_with_scores if subjects_with_scores > 0 else "NaN"
-
-    def get_subject_scores(self, subject_name):
-        return self.get_subject_by_name(subject_name).student_scores
-
-    def get_subject_average(self, subject_name):
-        subject = self.get_subject_by_name(subject_name)
-        return subject.get_scores_average()
-
-    def __repr__(self):
-        return self.name + " " + self.surname
+    with open('diaryData.json', 'w') as json_file:
+        json.dump(data, json_file)
 
 
-class Subject:
-    def __init__(self, name):
-        self.name = name
-        self.student_scores = []
+def load_diary_data(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
 
-    def add_score(self, score):
-        self.student_scores.append(score)
 
-    def get_scores_average(self):
-        if len(self.student_scores) == 0:
-            return "NaN"
-        else:
-            return sum(self.student_scores) / len(self.student_scores)
+def prepare_class_body(file_path, class_name):
+    body = {}
+    with open(file_path, 'r') as file:
+        lines = file.read().splitlines()
+        subjects = [subject.strip() for subject in lines[0].split(";")]
+        students = []
+        for student_line in lines[1::]:
+            students.append(prepare_student_body(student_line, subjects))
 
-    def __repr__(self):
-        return self.name
+        body["subjects"] = subjects
+        body["students"] = students
+    return body
+
+
+def prepare_student_body(student_line, subjects):
+    student_info = [info.strip() for info in student_line.split(";")]
+    student_grades = json.loads(student_info[3])
+    subjects_body = prepare_student_subjects_body(student_grades, subjects)
+    student_body = {"name": student_info[0], "surname": student_info[1], "attendance": student_info[2],
+                    "subjects": subjects_body}
+    return student_body
+
+
+def prepare_student_subjects_body(student_grades, subjects):
+    subjects_body = []
+    for i in range(len(subjects)):
+        subject = {
+            "name": subjects[i],
+            "student_scores": student_grades[i]
+        }
+        subjects_body.append(subject)
+    return subjects_body
+
+
+def get_all_students():
+    students = data['AGH']['classes'][0]['students']
+    return ["{} {}".format(student['name'], student['surname']) for student in students]
+
+
+def get_all_subjects():
+    subjects = data['AGH']['classes'][0]['subjects']
+    return subjects
 
 
 if __name__ == '__main__':
-    diary = Diary()
-    diary.add_new_subjects_from_file("subjects.txt")
-    diary.add_new_students_from_file("students.txt")
-    diary.add_all_students_to_subjects()
+    data = load_diary_data('diaryData.json')
+    add_class_to_diary_data("medycyna_data.txt", "Testowa uczelnia2", "medycyna")
+    print(get_all_students())
+    print(get_all_subjects())
 
-    diary.print_all_students()
-    diary.print_all_subjects()
+#########################
 
-# adding scores testing
-#     diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
-#     diary.add_student_score_in_subject("Jan", "Kowalski", 1, "math")
-    # diary.print_student_averages_in_all_subjects("Jan", "Kowalski")
-    # diary.print_student_average_score("Jan", "Kowalski")
+# TODO build json from files
+# TODO add json to data
 
-# subjects averages testing
-    # diary.print_all_students_average_scores()
-    # diary.print_subject_average_scores("IT")
-    # diary.print_all_subjects_average_scores()
 
-# attendance testing
-    # diary.print_student_attendance("Jan", "Kowalski")
-    # diary.print_all_students_attendance()
-    # diary.add_next_day_in_semester()
-    # diary.print_all_students_attendance()
-    # diary.add_attendance_to_student("Jan", "Kowalski")
-    # diary.print_all_students_attendance()
-    # diary.add_next_day_in_semester()
-    # diary.add_attendance_to_all_students()
-    # diary.print_all_students_attendance()
+# TODO generate json from studens, subjects files
 
+# TODO adding scores testing
+# diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
+# diary.add_student_score_in_subject("Jan", "Kowalski", 1, "math")
+
+# TODO print student average and average in subject
+# diary.print_student_averages_in_all_subjects("Jan", "Kowalski")
+# diary.print_student_average_score("Jan", "Kowalski")
+
+# todo subjects averages
+# diary.print_all_students_average_scores()
+# diary.print_subject_average_scores("IT")
+# diary.print_all_subjects_average_scores()
+
+# todo attendance
+# diary.print_student_attendance("Jan", "Kowalski")
+# diary.print_all_students_attendance()
+# diary.add_next_day_in_semester()
+# diary.print_all_students_attendance()
+# diary.add_attendance_to_student("Jan", "Kowalski")
+# diary.print_all_students_attendance()
+# diary.add_next_day_in_semester()
+# diary.add_attendance_to_all_students()
+# diary.print_all_students_attendance()
+
+# change scores to grades
 # todo ladowanie ocen z pliku
 # todo jakis interfejs ktorym by sie dodawalo oceny, obecnosci itp
+
+
+
+# todo think about adding to json from text files
+# def add_class_to_diary_data(file_path, school_name, class_name):
+#     class_body = prepare_class_body(file_path, class_name)
+#     class_body["name"] = class_name
+#
+#     if school_name not in data:
+#         data[school_name] = {}
+#
+#     if 'classes' not in data[school_name]:
+#         data[school_name]['classes'] = []
+#
+#     if
+#
+#     data[school_name]['classes'].append(class_body)
+#
+#     with open('diaryData.json', 'w') as json_file:
+#         json.dump(data, json_file)

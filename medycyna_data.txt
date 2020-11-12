@@ -1,0 +1,6 @@
+math; biology; english; philosophy
+Jan; Kowalski; 0; [[1, 2, 3], [2, 2, 2], [3, 3, 3], [5, 5, 5]]
+Piotr; Konieczny; 0; [[4, 3], [2, 2], [4], [5]]
+Zbigniew; Wesolek; 0; [[3, 1], [2, 2], [5], [2]]
+Konrad; Zbogdanca; 0; [[1], [2, 2], [1], [2]]
+Tomek; Kogucik; 0; [[3], [1], [1], [5]]
