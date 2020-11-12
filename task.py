@@ -6,18 +6,17 @@ def load_diary_data(file_path):
         return json.load(file)
 
 
-def add_class_to_diary_data(file_path):
+def add_class_from_text_file(file_path):
     with open(file_path, 'r') as file:
         lines = file.read().splitlines()
-    school_name = lines[0]
-    class_name = lines[1]
+    _school = lines[0]
+    _class = lines[1]
     class_body = prepare_class_body(lines[2::])
 
-    if school_name not in data:
-        data[school_name] = {}
-    data[school_name][class_name] = class_body
-    with open('diaryData.json', 'w') as json_file:
-        json.dump(data, json_file, indent=2)
+    if _school not in data:
+        data[_school] = {}
+    data[_school][_class] = class_body
+    save_data_to_file()
 
 
 def prepare_class_body(lines):
@@ -53,40 +52,70 @@ def prepare_student_subjects_body(student_grades, subjects):
     for i in range(len(subjects)):
         subject = {
             "name": subjects[i],
-            "student_scores": student_grades[i]
+            "student_grades": student_grades[i]
         }
         subjects_body.append(subject)
     return subjects_body
 
 
+def save_data_to_file():
+    with open('diaryData.json', 'w') as json_file:
+        json.dump(data, json_file, indent=2)
+
+
 def get_all_students():
     result = {}
-    for school_name in data.keys():
-        result[school_name] = {}
-        for class_name in data[school_name].keys():
-            result[school_name][class_name] = ["{} {}".format(student['name'], student['surname']) for student in
-                                               data[school_name][class_name]['students']]
+    for _school in data.keys():
+        result[_school] = {}
+        for _class in data[_school].keys():
+            result[_school][_class] = ["{} {}".format(student['name'], student['surname']) for student in
+                                       data[_school][_class]['students']]
     return result
+
+
+def get_student_by_personal_data(name, surname):
+    students = data[school_name][class_name]['students']
+    return next(filter(lambda x: x['name'] == name and x['surname'] == surname, students), {})
+
+
+def get_student_grades_in_subject(name, surname, subject_name):
+    student = get_student_by_personal_data(name, surname)
+    subject = next(filter(lambda x: x['name'] == subject_name, student['subjects']), {})
+    return subject['student_grades']
 
 
 def get_all_subjects():
     result = {}
-    for school_name in data.keys():
-        result[school_name] = list(data[school_name].keys())
+    for _school in data.keys():
+        result[_school] = list(data[_school].keys())
     return result
+
+
+def add_student_score_in_subject(name, surname, subject_name, grade):
+    students = data[school_name][class_name]['students']
+    for student in students:
+        if student['name'] == name and student['surname'] == surname:
+            for subject in student['subjects']:
+                if subject['name'] == subject_name:
+                    subject['student_grades'].append(grade)
+    save_data_to_file()
 
 
 if __name__ == '__main__':
     data = load_diary_data('diaryData.json')
-    add_class_to_diary_data("medycyna_data.txt")
-    print(get_all_students())
-    print(get_all_subjects())
+    # add_class_from_text_file("medycyna_data.txt")
+    # print(get_all_students())
+    # print(get_all_subjects())
+
+    school_name = "Testowa3"
+    class_name = "medycyna"
+    # add_student_score_in_subject('Piotr', 'Konieczny', 'math', 9)
+    # add_student_score_in_subject('Zbigniew', 'Wesolek', 'biology', 5)
+
+    # print(get_student_by_personal_data('Piotr', 'Konieczny'))
+    # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
 
 #########################
-
-# TODO adding scores testing
-# diary.add_student_score_in_subject("Jan", "Kowalski", 5, "math")
-# diary.add_student_score_in_subject("Jan", "Kowalski", 1, "math")
 
 # TODO print student average and average in subject
 # diary.print_student_averages_in_all_subjects("Jan", "Kowalski")

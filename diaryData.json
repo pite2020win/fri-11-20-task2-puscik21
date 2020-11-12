@@ -15,27 +15,36 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 4,
-                3
+                3,
+                8,
+                8,
+                8,
+                8,
+                9,
+                9,
+                9,
+                9,
+                9
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
                 2
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 4
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             }
@@ -48,27 +57,29 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 3,
                 1
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
-                2
+                2,
+                5,
+                5
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 2
               ]
             }
@@ -81,26 +92,26 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
                 2
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 2
               ]
             }
@@ -113,25 +124,25 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 3
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             }
