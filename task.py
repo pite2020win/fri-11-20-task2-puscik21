@@ -1,16 +1,16 @@
 import json
 
 
-def add_class_to_diary_data(file_path, school_name, class_name):
-    class_body = prepare_class_body(file_path, class_name)
+def add_class_to_diary_data(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.read().splitlines()
+    school_name = lines[0]
+    class_name = lines[1]
+    class_body = prepare_class_body(lines[2::])
 
     if school_name not in data:
         data[school_name] = {}
-
-    if 'classes' not in data[school_name]:
-        data[school_name]['classes'] = {}
-    data[school_name]['classes'][class_name] = class_body
-
+    data[school_name][class_name] = class_body
     with open('diaryData.json', 'w') as json_file:
         json.dump(data, json_file)
 
@@ -20,18 +20,23 @@ def load_diary_data(file_path):
         return json.load(file)
 
 
-def prepare_class_body(file_path, class_name):
+def prepare_class_body(lines):
     body = {}
-    with open(file_path, 'r') as file:
-        lines = file.read().splitlines()
-        subjects = [subject.strip() for subject in lines[0].split(";")]
-        students = []
-        for student_line in lines[1::]:
-            students.append(prepare_student_body(student_line, subjects))
-
-        body["subjects"] = subjects
-        body["students"] = students
+    subjects = parse_subjects(lines[0])
+    body["subjects"] = subjects
+    body["students"] = parse_students(lines[1::], subjects)
     return body
+
+
+def parse_subjects(subjects_string):
+    return [subject.strip() for subject in subjects_string.split(";")]
+
+
+def parse_students(lines, subjects):
+    students = []
+    for student_line in lines[1::]:
+        students.append(prepare_student_body(student_line, subjects))
+    return students
 
 
 def prepare_student_body(student_line, subjects):
@@ -66,7 +71,7 @@ def get_all_subjects():
 
 if __name__ == '__main__':
     data = load_diary_data('diaryData.json')
-    add_class_to_diary_data("medycyna_data.txt", "Testowa uczelnia2", "medycyna")
+    add_class_to_diary_data("medycyna_data.txt")
     print(get_all_students())
     print(get_all_subjects())
 
