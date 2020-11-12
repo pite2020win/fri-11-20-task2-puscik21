@@ -11,7 +11,7 @@
         {
           "name": "Jan",
           "surname": "Kowalski",
-          "attendance": "0",
+          "attendance": 1,
           "subjects": [
             {
               "name": "math",
@@ -50,7 +50,7 @@
         {
           "name": "Piotr",
           "surname": "Konieczny",
-          "attendance": "0",
+          "attendance": 2,
           "subjects": [
             {
               "name": "math",
@@ -83,7 +83,7 @@
         {
           "name": "Zbigniew",
           "surname": "Wesolek",
-          "attendance": "0",
+          "attendance": 3,
           "subjects": [
             {
               "name": "math",
@@ -116,7 +116,7 @@
         {
           "name": "Konrad",
           "surname": "Zbogdanca",
-          "attendance": "0",
+          "attendance": 4,
           "subjects": [
             {
               "name": "math",
@@ -148,7 +148,7 @@
         {
           "name": "Tomek",
           "surname": "Kogucik",
-          "attendance": "0",
+          "attendance": 5,
           "subjects": [
             {
               "name": "math",
