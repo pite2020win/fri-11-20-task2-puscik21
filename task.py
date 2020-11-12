@@ -1,4 +1,5 @@
 import json
+import statistics
 
 
 def load_diary_data(file_path):
@@ -33,7 +34,7 @@ def parse_subjects(subjects_string):
 
 def parse_students(lines, subjects):
     students = []
-    for student_line in lines[1::]:
+    for student_line in lines:
         students.append(prepare_student_body(student_line, subjects))
     return students
 
@@ -101,25 +102,38 @@ def add_student_score_in_subject(name, surname, subject_name, grade):
     save_data_to_file()
 
 
+def get_student_average_subject(name, surname, subject_name):
+    grades = get_student_grades_in_subject(name, surname, subject_name)
+    return statistics.mean(grades)
+
+
+def get_student_averages_in_all_subjects(name, surname):
+    student = get_student_by_personal_data(name, surname)
+    averages = []
+    for subject in student['subjects']:
+        averages.append(statistics.mean(subject['student_grades']))
+    return statistics.mean(averages)
+
+
 if __name__ == '__main__':
     data = load_diary_data('diaryData.json')
     # add_class_from_text_file("medycyna_data.txt")
     # print(get_all_students())
     # print(get_all_subjects())
 
-    school_name = "Testowa3"
+    school_name = "AGH"
     class_name = "medycyna"
-    # add_student_score_in_subject('Piotr', 'Konieczny', 'math', 9)
+    # add_student_score_in_subject('Piotr', 'Konieczny', 'math', 5)
     # add_student_score_in_subject('Zbigniew', 'Wesolek', 'biology', 5)
 
     # print(get_student_by_personal_data('Piotr', 'Konieczny'))
     # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
 
-#########################
+    # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
+    # print(get_student_average_subject('Piotr', 'Konieczny', 'math'))
+    # print(get_student_averages_in_all_subjects("Jan", "Kowalski"))
 
-# TODO print student average and average in subject
-# diary.print_student_averages_in_all_subjects("Jan", "Kowalski")
-# diary.print_student_average_score("Jan", "Kowalski")
+#########################
 
 # todo subjects averages
 # diary.print_all_students_average_scores()

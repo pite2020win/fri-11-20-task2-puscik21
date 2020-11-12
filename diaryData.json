@@ -1,5 +1,5 @@
 {
-  "Testowa3": {
+  "AGH": {
     "medycyna": {
       "subjects": [
         "math",
@@ -9,29 +9,22 @@
       ],
       "students": [
         {
-          "name": "Piotr",
-          "surname": "Konieczny",
+          "name": "Jan",
+          "surname": "Kowalski",
           "attendance": "0",
           "subjects": [
             {
               "name": "math",
               "student_grades": [
-                4,
-                3,
-                8,
-                8,
-                8,
-                8,
-                9,
-                9,
-                9,
-                9,
-                9
+                1,
+                2,
+                3
               ]
             },
             {
               "name": "biology",
               "student_grades": [
+                2,
                 2,
                 2
               ]
@@ -39,125 +32,21 @@
             {
               "name": "english",
               "student_grades": [
-                4
+                3,
+                3,
+                3
               ]
             },
             {
               "name": "philosophy",
               "student_grades": [
-                5
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Zbigniew",
-          "surname": "Wesolek",
-          "attendance": "0",
-          "subjects": [
-            {
-              "name": "math",
-              "student_grades": [
-                3,
-                1
-              ]
-            },
-            {
-              "name": "biology",
-              "student_grades": [
-                2,
-                2,
+                5,
                 5,
                 5
               ]
-            },
-            {
-              "name": "english",
-              "student_grades": [
-                5
-              ]
-            },
-            {
-              "name": "philosophy",
-              "student_grades": [
-                2
-              ]
             }
           ]
         },
-        {
-          "name": "Konrad",
-          "surname": "Zbogdanca",
-          "attendance": "0",
-          "subjects": [
-            {
-              "name": "math",
-              "student_grades": [
-                1
-              ]
-            },
-            {
-              "name": "biology",
-              "student_grades": [
-                2,
-                2
-              ]
-            },
-            {
-              "name": "english",
-              "student_grades": [
-                1
-              ]
-            },
-            {
-              "name": "philosophy",
-              "student_grades": [
-                2
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Tomek",
-          "surname": "Kogucik",
-          "attendance": "0",
-          "subjects": [
-            {
-              "name": "math",
-              "student_grades": [
-                3
-              ]
-            },
-            {
-              "name": "biology",
-              "student_grades": [
-                1
-              ]
-            },
-            {
-              "name": "english",
-              "student_grades": [
-                1
-              ]
-            },
-            {
-              "name": "philosophy",
-              "student_grades": [
-                5
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "informatyka": {
-      "subjects": [
-        "math",
-        "biology",
-        "english",
-        "philosophy"
-      ],
-      "students": [
         {
           "name": "Piotr",
           "surname": "Konieczny",
@@ -165,27 +54,27 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 4,
                 3
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
                 2
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 4
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             }
@@ -198,27 +87,27 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 3,
                 1
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
                 2
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 2
               ]
             }
@@ -231,26 +120,26 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 2,
                 2
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 2
               ]
             }
@@ -263,25 +152,25 @@
           "subjects": [
             {
               "name": "math",
-              "student_scores": [
+              "student_grades": [
                 3
               ]
             },
             {
               "name": "biology",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "english",
-              "student_scores": [
+              "student_grades": [
                 1
               ]
             },
             {
               "name": "philosophy",
-              "student_scores": [
+              "student_grades": [
                 5
               ]
             }
