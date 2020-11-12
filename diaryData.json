@@ -1,20 +1,336 @@
 {
   "AGH": {
-    "medycyna": {
+    "informatyka": {
+      "subjects": [
+        "python in the enterprise",
+        "math",
+        "english",
+        "data exploration"
+      ],
+      "students": [
+        {
+          "name": "Jan",
+          "surname": "Kowalski",
+          "attendance": 2,
+          "subjects": [
+            {
+              "name": "python in the enterprise",
+              "student_grades": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "name": "math",
+              "student_grades": [
+                2,
+                2,
+                2
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                3,
+                3,
+                3
+              ]
+            },
+            {
+              "name": "data exploration",
+              "student_grades": [
+                5,
+                5,
+                5
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Piotr",
+          "surname": "Konieczny",
+          "attendance": 3,
+          "subjects": [
+            {
+              "name": "python in the enterprise",
+              "student_grades": [
+                4,
+                3
+              ]
+            },
+            {
+              "name": "math",
+              "student_grades": [
+                2,
+                2,
+                5
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                4
+              ]
+            },
+            {
+              "name": "data exploration",
+              "student_grades": [
+                5
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Zbigniew",
+          "surname": "Wesolek",
+          "attendance": 5,
+          "subjects": [
+            {
+              "name": "python in the enterprise",
+              "student_grades": [
+                3,
+                1
+              ]
+            },
+            {
+              "name": "math",
+              "student_grades": [
+                2,
+                2
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                5
+              ]
+            },
+            {
+              "name": "data exploration",
+              "student_grades": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Konrad",
+          "surname": "Zbogdanca",
+          "attendance": 1,
+          "subjects": [
+            {
+              "name": "python in the enterprise",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "math",
+              "student_grades": [
+                2,
+                2
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "data exploration",
+              "student_grades": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tomek",
+          "surname": "Kogucik",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "python in the enterprise",
+              "student_grades": [
+                3
+              ]
+            },
+            {
+              "name": "math",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "data exploration",
+              "student_grades": [
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "zarzadzanie": {
       "subjects": [
         "math",
+        "management",
+        "english",
+        "economy"
+      ],
+      "students": [
+        {
+          "name": "Jan",
+          "surname": "Kowalski",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "math",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "management",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "english",
+              "student_grades": [
+                2
+              ]
+            },
+            {
+              "name": "economy",
+              "student_grades": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Lukasz",
+          "surname": "Konieczny",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "math",
+              "student_grades": []
+            },
+            {
+              "name": "management",
+              "student_grades": []
+            },
+            {
+              "name": "english",
+              "student_grades": []
+            },
+            {
+              "name": "economy",
+              "student_grades": []
+            }
+          ]
+        },
+        {
+          "name": "Wojtek",
+          "surname": "Nieporzadek",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "math",
+              "student_grades": []
+            },
+            {
+              "name": "management",
+              "student_grades": []
+            },
+            {
+              "name": "english",
+              "student_grades": []
+            },
+            {
+              "name": "economy",
+              "student_grades": []
+            }
+          ]
+        },
+        {
+          "name": "Konrad",
+          "surname": "Zbogdanca",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "math",
+              "student_grades": [
+                1
+              ]
+            },
+            {
+              "name": "management",
+              "student_grades": []
+            },
+            {
+              "name": "english",
+              "student_grades": []
+            },
+            {
+              "name": "economy",
+              "student_grades": []
+            }
+          ]
+        },
+        {
+          "name": "Tomek",
+          "surname": "Kogucik",
+          "attendance": 0,
+          "subjects": [
+            {
+              "name": "math",
+              "student_grades": []
+            },
+            {
+              "name": "management",
+              "student_grades": []
+            },
+            {
+              "name": "english",
+              "student_grades": []
+            },
+            {
+              "name": "economy",
+              "student_grades": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "UJ": {
+    "medycyna": {
+      "subjects": [
+        "chemistry",
         "biology",
         "english",
         "philosophy"
       ],
       "students": [
         {
-          "name": "Jan",
-          "surname": "Kowalski",
-          "attendance": 1,
+          "name": "Grzegorz",
+          "surname": "Nowak",
+          "attendance": 0,
           "subjects": [
             {
-              "name": "math",
+              "name": "chemistry",
               "student_grades": [
                 1,
                 2,
@@ -50,10 +366,10 @@
         {
           "name": "Piotr",
           "surname": "Konieczny",
-          "attendance": 2,
+          "attendance": 0,
           "subjects": [
             {
-              "name": "math",
+              "name": "chemistry",
               "student_grades": [
                 4,
                 3
@@ -83,10 +399,10 @@
         {
           "name": "Zbigniew",
           "surname": "Wesolek",
-          "attendance": 3,
+          "attendance": 0,
           "subjects": [
             {
-              "name": "math",
+              "name": "chemistry",
               "student_grades": [
                 3,
                 1
@@ -116,10 +432,10 @@
         {
           "name": "Konrad",
           "surname": "Zbogdanca",
-          "attendance": 4,
+          "attendance": 0,
           "subjects": [
             {
-              "name": "math",
+              "name": "chemistry",
               "student_grades": [
                 1
               ]
@@ -146,12 +462,12 @@
           ]
         },
         {
-          "name": "Tomek",
-          "surname": "Kogucik",
-          "attendance": 5,
+          "name": "Michal",
+          "surname": "Wawrzyniak",
+          "attendance": 0,
           "subjects": [
             {
-              "name": "math",
+              "name": "chemistry",
               "student_grades": [
                 3
               ]

@@ -1,0 +1,8 @@
+AGH
+zarzadzanie
+math; management; english; economy
+Jan; Kowalski; 0; [[1], [1], [2], [3]]
+Lukasz; Konieczny; 0; [[], [], [], []]
+Wojtek; Nieporzadek; 0; [[], [], [], []]
+Konrad; Zbogdanca; 0; [[1], [], [], []]
+Tomek; Kogucik; 0; [[], [], [], []]

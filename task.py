@@ -64,15 +64,18 @@ def save_data_to_file():
         json.dump(data, json_file, indent=2)
 
 
-# todo refactor
 def add_student_grade_in_subject(name, surname, subject_name, grade):
     students = get_students_in_current_class()
     for student in students:
         if student['name'] == name and student['surname'] == surname:
-            for subject in student['subjects']:
-                if subject['name'] == subject_name:
-                    subject['student_grades'].append(grade)
+            add_grade_to_subject(student['subjects'], subject_name, grade)
     save_data_to_file()
+
+
+def add_grade_to_subject(subjects, subject_name, grade):
+    for subject in subjects:
+        if subject['name'] == subject_name:
+            subject['student_grades'].append(grade)
 
 
 def get_all_students():
@@ -96,19 +99,21 @@ def get_students_in_current_class():
     return data[school_name][class_name]['students']
 
 
-def get_averages_in_subject(subject_name):
-    students = get_students_in_current_class()
-    averages = {}
-    for student in students:
-        name, surname = student['name'], student['surname']
-        names = "{} {}".format(name, surname)
-        averages[names] = get_student_average_in_subject(name, surname, subject_name)
-    return averages
+def get_all_students_averages_in_subject(subject_name):
+    return get_all_students_stats_for_function(get_student_average_in_subject, subject_name)
 
 
 def get_student_average_in_subject(name, surname, subject_name):
     grades = get_student_grades_in_subject(name, surname, subject_name)
-    return statistics.mean(grades)
+    return calculate_rounded_mean(grades)
+
+
+def calculate_rounded_mean(grades):
+    filtered = list(filter(lambda x: x != "NaN", grades))
+    if len(filtered) == 0:
+        return "NaN"
+
+    return round(statistics.mean(filtered), 2)
 
 
 def get_student_grades_in_subject(name, surname, subject_name):
@@ -125,57 +130,72 @@ def get_student_by_personal_data(name, surname):
     return student
 
 
-def get_all_students_average_grades():
+def get_all_students_stats_for_function(func, opt=None):
     students = get_students_in_current_class()
     averages = {}
     for student in students:
         name, surname = student['name'], student['surname']
         names = "{} {}".format(name, surname)
-        averages[names] = get_student_average_from_all_subjects(name, surname)
+        if opt is None:
+            averages[names] = func(name, surname)
+        else:
+            averages[names] = func(name, surname, opt)
     return averages
+
+
+def get_all_students_average_grades():
+    return get_all_students_stats_for_function(get_student_average_from_all_subjects)
 
 
 def get_student_average_from_all_subjects(name, surname):
     student = get_student_by_personal_data(name, surname)
     averages = []
     for subject in student['subjects']:
-        averages.append(statistics.mean(subject['student_grades']))
-    return statistics.mean(averages)
+        averages.append(calculate_rounded_mean(subject['student_grades']))
+    return calculate_rounded_mean(averages)
 
 
 def get_all_students_attendance():
-    students = get_students_in_current_class()
-    attendances = {}
-    for student in students:
-        name, surname = student['name'], student['surname']
-        names = "{} {}".format(name, surname)
-        attendances[names] = get_student_attendance(name, surname)
-    return attendances
+    return get_all_students_stats_for_function(get_student_attendance)
 
 
 def get_student_attendance(name, surname):
     return get_student_by_personal_data(name, surname)['attendance']
 
 
+def print_result(result, comment="", pretty_print=True):
+    print("\n***** {} *****".format(comment))
+    if pretty_print:
+        print(json.dumps(result, indent=2))
+    else:
+        print(result)
+
+
 if __name__ == '__main__':
     data = load_diary_data('diaryData.json')
-    # add_class_from_text_file("medycyna_data.txt")
-    print(get_all_students())
-    # print(get_all_subjects())
-
+    add_class_from_text_file("informatyka_data.txt")
+    add_class_from_text_file("zarzadzanie_data.txt")
+    add_class_from_text_file("medycyna_data.txt")
     school_name = "AGH"
-    class_name = "medycyna"
-    # add_student_grade_in_subject('Piotr', 'Konieczny', 'math', 5)
-    # add_student_grade_in_subject('Zbigniew', 'Wesolek', 'biology', 5)
+    class_name = "informatyka"
 
-    # print(get_student_by_personal_data('Piotr', 'Konieczny'))
-    # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
+    # Showcases
+    print_result(get_all_students(), "All students in all schools")
+    print_result(get_all_subjects(), "All subjects in all schools")
 
-    # print(get_student_average_subject('Piotr', 'Konieczny', 'math'))
-    # print(get_student_averages_in_all_subjects("Jan", "Kowalski"))
-    # print(get_all_students_average_grades())
+    print_result(get_students_in_current_class(), "Students in currently chosen class")
 
-    # print(get_averages_in_subject("math"))
+    print_result(get_student_by_personal_data('Piotr', 'Konieczny'), "Single student data")
+    print_result(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'), "Piotr Konieczny grades in math")
+    add_student_grade_in_subject('Piotr', 'Konieczny', 'math', 5)
+    print_result(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'), "Grades after addition")
 
-    # print(get_student_attendance("Jan", "Kowalski"))
-    # print(get_all_students_attendance())
+    print_result(get_student_average_in_subject('Piotr', 'Konieczny', 'math'), "Piotr Konieczny average in math")
+    print_result(get_all_students_averages_in_subject('math'), "All students averages in math")
+
+    print_result(get_student_average_from_all_subjects("Jan", "Kowalski"), "Jan Kowalski average grade")
+    print_result(get_all_students_average_grades(), "All students averages")
+
+    print_result(get_student_attendance("Jan", "Kowalski"), "Jan Kowalski attendance")
+
+    print_result(get_all_students_attendance(), "All students attendance")

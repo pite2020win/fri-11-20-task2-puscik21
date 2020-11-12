@@ -1,0 +1,8 @@
+AGH
+informatyka
+python in the enterprise; math; english; data exploration
+Jan; Kowalski; 2; [[1, 2, 3], [2, 2, 2], [3, 3, 3], [5, 5, 5]]
+Piotr; Konieczny; 3; [[4, 3], [2, 2], [4], [5]]
+Zbigniew; Wesolek; 5; [[3, 1], [2, 2], [5], [2]]
+Konrad; Zbogdanca; 1; [[1], [2, 2], [1], [2]]
+Tomek; Kogucik; 0; [[3], [1], [1], [5]]
