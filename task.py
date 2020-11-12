@@ -64,6 +64,17 @@ def save_data_to_file():
         json.dump(data, json_file, indent=2)
 
 
+# todo refactor
+def add_student_grade_in_subject(name, surname, subject_name, grade):
+    students = get_students_in_current_class()
+    for student in students:
+        if student['name'] == name and student['surname'] == surname:
+            for subject in student['subjects']:
+                if subject['name'] == subject_name:
+                    subject['student_grades'].append(grade)
+    save_data_to_file()
+
+
 def get_all_students():
     result = {}
     for _school in data.keys():
@@ -74,9 +85,34 @@ def get_all_students():
     return result
 
 
-def get_student_by_personal_data(name, surname):
-    students = data[school_name][class_name]['students']
-    return next(filter(lambda x: x['name'] == name and x['surname'] == surname, students), {})
+def get_all_subjects():
+    result = {}
+    for _school in data.keys():
+        result[_school] = list(data[_school].keys())
+    return result
+
+
+def get_students_in_current_class():
+    return data[school_name][class_name]['students']
+
+
+def get_all_students_names_in_current_class():
+    return [[student['name'], student['surname']] for student in get_students_in_current_class()]
+
+
+def get_averages_in_subject(subject_name):
+    students = get_students_in_current_class()
+    averages = {}
+    for student in students:
+        name, surname = student['name'], student['surname']
+        names = "{} {}".format(name, surname)
+        averages[names] = get_student_average_in_subject(name, surname, subject_name)
+    return averages
+
+
+def get_student_average_in_subject(name, surname, subject_name):
+    grades = get_student_grades_in_subject(name, surname, subject_name)
+    return statistics.mean(grades)
 
 
 def get_student_grades_in_subject(name, surname, subject_name):
@@ -85,29 +121,22 @@ def get_student_grades_in_subject(name, surname, subject_name):
     return subject['student_grades']
 
 
-def get_all_subjects():
-    result = {}
-    for _school in data.keys():
-        result[_school] = list(data[_school].keys())
-    return result
+def get_student_by_personal_data(name, surname):
+    students = get_students_in_current_class()
+    return next(filter(lambda x: x['name'] == name and x['surname'] == surname, students), {})
 
 
-def add_student_score_in_subject(name, surname, subject_name, grade):
-    students = data[school_name][class_name]['students']
+def get_all_students_average_grades():
+    students = get_all_students_names_in_current_class()
+    averages = {}
     for student in students:
-        if student['name'] == name and student['surname'] == surname:
-            for subject in student['subjects']:
-                if subject['name'] == subject_name:
-                    subject['student_grades'].append(grade)
-    save_data_to_file()
+        name, surname = student[0], student[1]
+        names = "{} {}".format(name, surname)
+        averages[names] = get_student_average_from_all_subjects(name, surname)
+    return averages
 
 
-def get_student_average_subject(name, surname, subject_name):
-    grades = get_student_grades_in_subject(name, surname, subject_name)
-    return statistics.mean(grades)
-
-
-def get_student_averages_in_all_subjects(name, surname):
+def get_student_average_from_all_subjects(name, surname):
     student = get_student_by_personal_data(name, surname)
     averages = []
     for subject in student['subjects']:
@@ -118,13 +147,13 @@ def get_student_averages_in_all_subjects(name, surname):
 if __name__ == '__main__':
     data = load_diary_data('diaryData.json')
     # add_class_from_text_file("medycyna_data.txt")
-    # print(get_all_students())
+    print(get_all_students())
     # print(get_all_subjects())
 
     school_name = "AGH"
     class_name = "medycyna"
-    # add_student_score_in_subject('Piotr', 'Konieczny', 'math', 5)
-    # add_student_score_in_subject('Zbigniew', 'Wesolek', 'biology', 5)
+    # add_student_grade_in_subject('Piotr', 'Konieczny', 'math', 5)
+    # add_student_grade_in_subject('Zbigniew', 'Wesolek', 'biology', 5)
 
     # print(get_student_by_personal_data('Piotr', 'Konieczny'))
     # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
@@ -132,26 +161,23 @@ if __name__ == '__main__':
     # print(get_student_grades_in_subject('Piotr', 'Konieczny', 'math'))
     # print(get_student_average_subject('Piotr', 'Konieczny', 'math'))
     # print(get_student_averages_in_all_subjects("Jan", "Kowalski"))
+    # print(get_all_students_average_grades())
+
+    # print(get_averages_in_subject("math"))
+
+    # todo attendance
+    # diary.print_student_attendance("Jan", "Kowalski")
+    # diary.print_all_students_attendance()
+    # diary.add_next_day_in_semester()
+    # diary.print_all_students_attendance()
+    # diary.add_attendance_to_student("Jan", "Kowalski")
+    # diary.print_all_students_attendance()
+    # diary.add_next_day_in_semester()
+    # diary.add_attendance_to_all_students()
+    # diary.print_all_students_attendance()
 
 #########################
 
-# todo subjects averages
-# diary.print_all_students_average_scores()
-# diary.print_subject_average_scores("IT")
-# diary.print_all_subjects_average_scores()
-
-# todo attendance
-# diary.print_student_attendance("Jan", "Kowalski")
-# diary.print_all_students_attendance()
-# diary.add_next_day_in_semester()
-# diary.print_all_students_attendance()
-# diary.add_attendance_to_student("Jan", "Kowalski")
-# diary.print_all_students_attendance()
-# diary.add_next_day_in_semester()
-# diary.add_attendance_to_all_students()
-# diary.print_all_students_attendance()
-
-# change scores to grades
 # todo ladowanie ocen z pliku
 # todo jakis interfejs ktorym by sie dodawalo oceny, obecnosci itp
 
